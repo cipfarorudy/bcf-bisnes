@@ -1,7 +1,10 @@
 from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-import pandas as pd, datetime, os, textwrap
+import pandas as pd
+import datetime
+import os
+import textwrap
 
 base = os.path.join(os.path.dirname(__file__), "output")
 os.makedirs(base, exist_ok=True)
@@ -458,4 +461,5 @@ df = pd.DataFrame([{
 crm_path = os.path.join(base, "template_import_crm_leads.csv")
 df.to_csv(crm_path, index=False, encoding="utf-8")
 
-html_path, script_path, devis_path, crm_path
+# Module variables for external access
+__all__ = ['html_path', 'script_path', 'devis_path', 'crm_path']
