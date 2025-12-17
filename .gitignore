@@ -1,0 +1,8 @@
+bin
+obj
+dist
+node_modules
+.env
+.env.local
+local.settings.json
+*.log

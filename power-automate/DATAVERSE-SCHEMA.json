@@ -1,0 +1,290 @@
+{
+  "tables": [
+    {
+      "displayName": "Lead",
+      "logicalName": "{DATAVERSE_PREFIX}lead",
+      "fields": [
+        {
+          "displayName": "Lead ID",
+          "logicalName": "{DATAVERSE_PREFIX}leadid",
+          "type": "uniqueidentifier"
+        },
+        {
+          "displayName": "Name",
+          "logicalName": "{DATAVERSE_PREFIX}name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "displayName": "Email",
+          "logicalName": "{DATAVERSE_PREFIX}email",
+          "type": "string",
+          "required": true
+        },
+        {
+          "displayName": "Phone",
+          "logicalName": "{DATAVERSE_PREFIX}phone",
+          "type": "string"
+        },
+        {
+          "displayName": "Company Name",
+          "logicalName": "{DATAVERSE_PREFIX}companyname",
+          "type": "string"
+        },
+        {
+          "displayName": "Source",
+          "logicalName": "{DATAVERSE_PREFIX}source",
+          "type": "optionset",
+          "options": ["Website", "Referral", "Call", "Email", "Social Media"]
+        },
+        {
+          "displayName": "Status",
+          "logicalName": "{DATAVERSE_PREFIX}status",
+          "type": "optionset",
+          "options": ["Nouveau", "Qualifié", "RDV", "Perdu", "Converti"]
+        },
+        {
+          "displayName": "Main Need",
+          "logicalName": "{DATAVERSE_PREFIX}mainneed",
+          "type": "string"
+        },
+        {
+          "displayName": "Budget",
+          "logicalName": "{DATAVERSE_PREFIX}budget",
+          "type": "currency"
+        }
+      ]
+    },
+    {
+      "displayName": "Account",
+      "logicalName": "{DATAVERSE_PREFIX}account",
+      "fields": [
+        {
+          "displayName": "Account ID",
+          "logicalName": "{DATAVERSE_PREFIX}accountid",
+          "type": "uniqueidentifier"
+        },
+        {
+          "displayName": "Name",
+          "logicalName": "{DATAVERSE_PREFIX}name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "displayName": "Industry",
+          "logicalName": "{DATAVERSE_PREFIX}industry",
+          "type": "string"
+        },
+        {
+          "displayName": "Website",
+          "logicalName": "{DATAVERSE_PREFIX}website",
+          "type": "string"
+        },
+        {
+          "displayName": "Phone",
+          "logicalName": "{DATAVERSE_PREFIX}phone",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "displayName": "Contact",
+      "logicalName": "{DATAVERSE_PREFIX}contact",
+      "fields": [
+        {
+          "displayName": "Contact ID",
+          "logicalName": "{DATAVERSE_PREFIX}contactid",
+          "type": "uniqueidentifier"
+        },
+        {
+          "displayName": "First Name",
+          "logicalName": "{DATAVERSE_PREFIX}firstname",
+          "type": "string"
+        },
+        {
+          "displayName": "Last Name",
+          "logicalName": "{DATAVERSE_PREFIX}lastname",
+          "type": "string"
+        },
+        {
+          "displayName": "Email",
+          "logicalName": "{DATAVERSE_PREFIX}email",
+          "type": "string"
+        },
+        {
+          "displayName": "Phone",
+          "logicalName": "{DATAVERSE_PREFIX}phone",
+          "type": "string"
+        },
+        {
+          "displayName": "Job Title",
+          "logicalName": "{DATAVERSE_PREFIX}jobtitle",
+          "type": "string"
+        },
+        {
+          "displayName": "Decision Maker",
+          "logicalName": "{DATAVERSE_PREFIX}decisionmaker",
+          "type": "boolean"
+        },
+        {
+          "displayName": "Account",
+          "logicalName": "{DATAVERSE_PREFIX}accountid",
+          "type": "lookup",
+          "referencesEntity": "{DATAVERSE_PREFIX}account"
+        }
+      ]
+    },
+    {
+      "displayName": "Subscription",
+      "logicalName": "{DATAVERSE_PREFIX}subscription",
+      "fields": [
+        {
+          "displayName": "Subscription ID",
+          "logicalName": "{DATAVERSE_PREFIX}subscriptionid",
+          "type": "uniqueidentifier"
+        },
+        {
+          "displayName": "Name",
+          "logicalName": "{DATAVERSE_PREFIX}name",
+          "type": "string"
+        },
+        {
+          "displayName": "Plan",
+          "logicalName": "{DATAVERSE_PREFIX}plan",
+          "type": "optionset",
+          "options": ["PRO", "PREMIUM"]
+        },
+        {
+          "displayName": "Status",
+          "logicalName": "{DATAVERSE_PREFIX}status",
+          "type": "optionset",
+          "options": ["Pending", "Active", "PastDue", "Cancelled", "Incomplete"]
+        },
+        {
+          "displayName": "Stripe Customer ID",
+          "logicalName": "{DATAVERSE_PREFIX}stripecustomerid",
+          "type": "string"
+        },
+        {
+          "displayName": "Stripe Subscription ID",
+          "logicalName": "{DATAVERSE_PREFIX}stripesubscriptionid",
+          "type": "string"
+        },
+        {
+          "displayName": "Start Date",
+          "logicalName": "{DATAVERSE_PREFIX}startdate",
+          "type": "datetime"
+        },
+        {
+          "displayName": "Current Period End",
+          "logicalName": "{DATAVERSE_PREFIX}currentperiodend",
+          "type": "datetime"
+        },
+        {
+          "displayName": "MRR (€)",
+          "logicalName": "{DATAVERSE_PREFIX}mrr",
+          "type": "currency"
+        },
+        {
+          "displayName": "Account",
+          "logicalName": "{DATAVERSE_PREFIX}accountid",
+          "type": "lookup",
+          "referencesEntity": "{DATAVERSE_PREFIX}account"
+        },
+        {
+          "displayName": "Kickoff Done",
+          "logicalName": "{DATAVERSE_PREFIX}kickoffdone",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "displayName": "Service Ticket",
+      "logicalName": "{DATAVERSE_PREFIX}serviceticket",
+      "fields": [
+        {
+          "displayName": "Ticket ID",
+          "logicalName": "{DATAVERSE_PREFIX}ticketid",
+          "type": "uniqueidentifier"
+        },
+        {
+          "displayName": "Title",
+          "logicalName": "{DATAVERSE_PREFIX}title",
+          "type": "string"
+        },
+        {
+          "displayName": "Type",
+          "logicalName": "{DATAVERSE_PREFIX}type",
+          "type": "optionset",
+          "options": ["Call Center", "Financing", "Domain & Mail", "Tunnel", "Onboarding"]
+        },
+        {
+          "displayName": "Status",
+          "logicalName": "{DATAVERSE_PREFIX}status",
+          "type": "optionset",
+          "options": ["À faire", "En cours", "Terminé", "Bloqué"]
+        },
+        {
+          "displayName": "Due Date",
+          "logicalName": "{DATAVERSE_PREFIX}duedate",
+          "type": "datetime"
+        },
+        {
+          "displayName": "Assigned To",
+          "logicalName": "{DATAVERSE_PREFIX}assignedto",
+          "type": "string"
+        },
+        {
+          "displayName": "Subscription",
+          "logicalName": "{DATAVERSE_PREFIX}subscriptionid",
+          "type": "lookup",
+          "referencesEntity": "{DATAVERSE_PREFIX}subscription"
+        }
+      ]
+    },
+    {
+      "displayName": "Funding Case",
+      "logicalName": "{DATAVERSE_PREFIX}fundingcase",
+      "fields": [
+        {
+          "displayName": "Case ID",
+          "logicalName": "{DATAVERSE_PREFIX}caseid",
+          "type": "uniqueidentifier"
+        },
+        {
+          "displayName": "Type",
+          "logicalName": "{DATAVERSE_PREFIX}type",
+          "type": "optionset",
+          "options": ["CPF", "OPCO", "France Travail", "Regional", "Personal"]
+        },
+        {
+          "displayName": "Status",
+          "logicalName": "{DATAVERSE_PREFIX}status",
+          "type": "optionset",
+          "options": ["À qualifier", "En cours", "Approuvé", "Rejeté"]
+        },
+        {
+          "displayName": "Amount (€)",
+          "logicalName": "{DATAVERSE_PREFIX}amount",
+          "type": "currency"
+        },
+        {
+          "displayName": "Documents Received",
+          "logicalName": "{DATAVERSE_PREFIX}documentsreceived",
+          "type": "boolean"
+        },
+        {
+          "displayName": "Notes",
+          "logicalName": "{DATAVERSE_PREFIX}notes",
+          "type": "memo"
+        },
+        {
+          "displayName": "Subscription",
+          "logicalName": "{DATAVERSE_PREFIX}subscriptionid",
+          "type": "lookup",
+          "referencesEntity": "{DATAVERSE_PREFIX}subscription"
+        }
+      ]
+    }
+  ]
+}
