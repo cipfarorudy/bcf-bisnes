@@ -80,6 +80,18 @@ base = os.path.join(os.path.dirname(__file__), "output")  # Modifier selon vos b
 - `python-docx` - Pour la génération de documents Word
 - `pandas` - Pour la manipulation de données CSV
 
+## Tests
+
+Pour vérifier que tout fonctionne correctement, exécutez les tests :
+```bash
+python test_generator.py
+```
+
+Ou utilisez le script d'exemple :
+```bash
+python example_usage.py
+```
+
 ## Licence
 
 Tous droits réservés.
