@@ -2,7 +2,7 @@
   "name": "stripe-pro-functions",
   "version": "1.0.0",
   "description": "Azure Functions for Stripe webhooks + Dataverse sync (PRO Plan)",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
