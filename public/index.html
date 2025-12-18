@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BCF Bizness - Abonnement PRO</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 100%;
+        padding: 40px;
+      }
+      h1 {
+        color: #667eea;
+        font-size: 2em;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 0.95em;
+      }
+      .pricing {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      .pricing .plan-name {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .pricing .price {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .pricing .price-detail {
+        font-size: 0.9em;
+        opacity: 0.9;
+        margin-bottom: 15px;
+      }
+      .pricing .setup-fee {
+        font-size: 1.1em;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 0.9em;
+      }
+      input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1em;
+        transition: border-color 0.3s;
+      }
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+      .btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+      }
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .error {
+        background: #fee;
+        color: #c33;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+      }
+      .features {
+        margin: 20px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+      }
+      .features ul {
+        list-style: none;
+      }
+      .features li {
+        padding: 8px 0;
+        color: #555;
+      }
+      .features li:before {
+        content: "✓ ";
+        color: #667eea;
+        font-weight: bold;
+        margin-right: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>BCF Bizness</h1>
+      <p class="subtitle">Plateforme de formation professionnelle</p>
+
+      <div class="pricing">
+        <div class="plan-name">PLAN PRO</div>
+        <div class="price">990 €</div>
+        <div class="price-detail">par mois</div>
+        <div class="setup-fee">+ 490 € de frais d'activation</div>
+      </div>
+
+      <div class="features">
+        <ul>
+          <li>Accès complet à la plateforme</li>
+          <li>Gestion des bons de commande</li>
+          <li>Support prioritaire</li>
+          <li>Accompagnement financement CPF/OPCO</li>
+          <li>Tableau de bord Analytics</li>
+        </ul>
+      </div>
+
+      <div id="error" class="error"></div>
+
+      <form id="checkout-form">
+        <div class="form-group">
+          <label for="email">Email professionnel</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="votre.email@entreprise.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="companyName">Nom de l'entreprise</label>
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            required
+            placeholder="Ma Société SARL"
+          />
+        </div>
+
+        <button type="submit" class="btn" id="submit-btn">
+          S'abonner maintenant
+        </button>
+      </form>
+    </div>
+
+    <script>
+      const FUNCTION_URL =
+        "https://bcf-stripe-prod.azurewebsites.net/api/stripe/createcheckoutsession";
+      const FUNCTION_KEY = "VOTRE_FUNCTION_KEY_ICI"; // À récupérer avec: az functionapp keys list
+
+      document
+        .getElementById("checkout-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const btn = document.getElementById("submit-btn");
+          const errorDiv = document.getElementById("error");
+          errorDiv.style.display = "none";
+
+          btn.disabled = true;
+          btn.textContent = "Redirection vers le paiement...";
+
+          try {
+            const response = await fetch(FUNCTION_URL, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-functions-key": FUNCTION_KEY,
+              },
+              body: JSON.stringify({
+                email: document.getElementById("email").value,
+                companyName: document.getElementById("companyName").value,
+                dvSubscriptionId: "web-" + Date.now(),
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error("Erreur de configuration du paiement");
+            }
+
+            const data = await response.json();
+
+            if (data.url) {
+              window.location.href = data.url;
+            } else {
+              throw new Error("URL de paiement non reçue");
+            }
+          } catch (error) {
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = "block";
+            btn.disabled = false;
+            btn.textContent = "S'abonner maintenant";
+          }
+        });
+    </script>
+  </body>
+</html>
