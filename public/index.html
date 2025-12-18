@@ -195,7 +195,9 @@
     <script>
       const FUNCTION_URL =
         "https://bcf-stripe-prod.azurewebsites.net/api/stripe/createcheckoutsession";
-      const FUNCTION_KEY = "VOTRE_FUNCTION_KEY_ICI"; // À récupérer avec: az functionapp keys list
+      // IMPORTANT: Remplacez par votre clé Azure Function
+      // Récupérez-la avec: az functionapp keys list --name bcf-stripe-prod --resource-group rg-bcf-prod --query "functionKeys.default" -o tsv
+      const FUNCTION_KEY = "REMPLACER_PAR_VOTRE_CLE_AZURE";
 
       document
         .getElementById("checkout-form")
