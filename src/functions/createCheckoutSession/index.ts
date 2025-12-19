@@ -5,6 +5,7 @@ import {
   InvocationContext,
 } from "@azure/functions";
 import { stripe } from "../../shared/stripe";
+import { createDvLead } from "../../shared/dataverse";
 
 /**
  * Crée une session Stripe Checkout
@@ -19,11 +20,23 @@ app.http("createCheckoutSession", {
     ctx: InvocationContext
   ): Promise<HttpResponseInit> => {
     try {
-      const body = await req.json() as { email?: string; companyName?: string; dvSubscriptionId?: string };
+      const body = (await req.json()) as {
+        email?: string;
+        companyName?: string;
+        dvSubscriptionId?: string;
+      };
       const { email, companyName, dvSubscriptionId } = body;
 
       if (!email) {
         return { status: 400, body: "Email required" };
+      }
+
+      // Enregistrement lead (non bloquant)
+      try {
+        await createDvLead({ email, companyName, leadName: companyName });
+        ctx.log("Lead enregistré dans Dataverse");
+      } catch (e: any) {
+        ctx.warn?.("Dataverse lead skip: " + e.message);
       }
 
       const pricePro = process.env.STRIPE_PRICE_ID_PRO;
