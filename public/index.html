@@ -207,59 +207,86 @@
           S'abonner maintenant
         </button>
       </form>
+      <footer class="footer">
+        <div class="footer-row">
+          <span>Site officiel : </span>
+          <a href="https://bcfbiznes.com" target="_blank" rel="noopener"
+            >bcfbiznes.com</a
+          >
+        </div>
+        <div class="footer-row">
+          <span>Contact : </span>
+          <a href="mailto:contact@bcfbiznes">contact@bcfbiznes</a>
+        </div>
+        <div class="footer-row">
+          <span>Téléphone : </span>
+          <a href="tel:+33691250738">06 91 25 07 38</a>
+        </div>
+      </footer>
     </div>
 
     <script>
-      const FUNCTION_URL =
-        "https://bcf-stripe-prod.azurewebsites.net/api/stripe/createcheckoutsession";
-      // IMPORTANT: Remplacez par votre clé Azure Function
-      // Récupérez-la avec: az functionapp keys list --name bcf-stripe-prod --resource-group rg-bcf-prod --query "functionKeys.default" -o tsv
-      const FUNCTION_KEY = "REMPLACER_PAR_VOTRE_CLE_AZURE";
+          const FUNCTION_URL =
+            "https://bcf-stripe-prod.azurewebsites.net/api/stripe/createcheckoutsession";
+        .footer {
+          margin-top: 28px;
+          padding-top: 18px;
+          border-top: 1px solid #eee;
+          font-size: 0.95em;
+          color: #555;
+        }
+        .footer-row { margin: 6px 0; }
+        .footer a { color: #667eea; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+      </style>
+          // IMPORTANT: Remplacez par votre clé Azure Function
+          // Récupérez-la avec: az functionapp keys list --name bcf-stripe-prod --resource-group rg-bcf-prod --query "functionKeys.default" -o tsv
+          const FUNCTION_KEY = "REMPLACER_PAR_VOTRE_CLE_AZURE";
 
-      document
-        .getElementById("checkout-form")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
+          document
+            .getElementById("checkout-form")
+            .addEventListener("submit", async (e) => {
+              e.preventDefault();
 
-          const btn = document.getElementById("submit-btn");
-          const errorDiv = document.getElementById("error");
-          errorDiv.style.display = "none";
+              const btn = document.getElementById("submit-btn");
+              const errorDiv = document.getElementById("error");
+              errorDiv.style.display = "none";
 
-          btn.disabled = true;
-          btn.textContent = "Redirection vers le paiement...";
+              btn.disabled = true;
+              btn.textContent = "Redirection vers le paiement...";
 
-          try {
-            const response = await fetch(FUNCTION_URL, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "x-functions-key": FUNCTION_KEY,
-              },
-              body: JSON.stringify({
-                email: document.getElementById("email").value,
-                companyName: document.getElementById("companyName").value,
-                dvSubscriptionId: "web-" + Date.now(),
-              }),
+              try {
+                const response = await fetch(FUNCTION_URL, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "x-functions-key": FUNCTION_KEY,
+                  },
+                  body: JSON.stringify({
+                    email: document.getElementById("email").value,
+                    companyName: document.getElementById("companyName").value,
+                    dvSubscriptionId: "web-" + Date.now(),
+                  }),
+                });
+
+                if (!response.ok) {
+                  throw new Error("Erreur de configuration du paiement");
+                }
+
+                const data = await response.json();
+
+                if (data.url) {
+                  window.location.href = data.url;
+                } else {
+                  throw new Error("URL de paiement non reçue");
+                }
+              } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = "block";
+                btn.disabled = false;
+                btn.textContent = "S'abonner maintenant";
+              }
             });
-
-            if (!response.ok) {
-              throw new Error("Erreur de configuration du paiement");
-            }
-
-            const data = await response.json();
-
-            if (data.url) {
-              window.location.href = data.url;
-            } else {
-              throw new Error("URL de paiement non reçue");
-            }
-          } catch (error) {
-            errorDiv.textContent = error.message;
-            errorDiv.style.display = "block";
-            btn.disabled = false;
-            btn.textContent = "S'abonner maintenant";
-          }
-        });
     </script>
   </body>
 </html>
