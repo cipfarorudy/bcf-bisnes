@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paiement confirmé - BCF Bizness</title>
+    <style>
+      body { font-family: Segoe UI, Tahoma, sans-serif; background: linear-gradient(135deg,#667eea,#764ba2); min-height: 100vh; display:flex; align-items:center; justify-content:center; padding: 24px; }
+      .card { background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.25); max-width:560px; width:100%; padding:32px; text-align:center; }
+      h1 { color:#667eea; margin-bottom:10px; }
+      p { color:#555; margin:8px 0; }
+      .code { background:#f7f7f9; border:1px solid #eee; border-radius:8px; padding:10px; font-family:Consolas, monospace; color:#333; margin-top:10px; }
+      .actions { margin-top:22px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+      .btn { padding:12px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+      .btn-primary { background: linear-gradient(135deg,#667eea,#764ba2); color:#fff; }
+      .btn-secondary { background:#eee; color:#333; }
+      a.btn { text-decoration:none; display:inline-block; }
+      .footer { margin-top:18px; font-size:.95em; color:#555; }
+      .footer a { color:#667eea; text-decoration:none; }
+      .footer a:hover { text-decoration:underline; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Merci, votre paiement est confirmé ✅</h1>
+      <p>Votre souscription PRO est enregistrée. Nous vous enverrons un email de bienvenue sous peu.</p>
+      <div id="session" class="code" style="display:none"></div>
+      <div class="actions">
+        <a href="./index.html" class="btn btn-secondary">Retour à l'accueil</a>
+        <a href="mailto:contact@bcfbiznes.com" class="btn btn-primary">Nous contacter</a>
+      </div>
+      <div class="footer">
+        Besoin d’aide ? Écrivez-nous à <a href="mailto:contact@bcfbiznes.com">contact@bcfbiznes.com</a>
+      </div>
+    </div>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id');
+      if (sessionId) {
+        const el = document.getElementById('session');
+        el.style.display = 'block';
+        el.textContent = `Session Stripe: ${sessionId}`;
+      }
+    </script>
+  </body>
+</html>
