@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="BCF Bizness — plateforme B2B dédiée à l’externalisation administrative, la gestion opérationnelle, le conseil et la relation client. bcfbiznes.com est le portail officiel et l’accès unifié à l’ensemble des services numériques du groupe."
+      content="BCF Bizness — plateforme B2B dédiée à l'externalisation administrative, la gestion opérationnelle, le conseil et la relation client. bcfbiznes.com est le portail officiel et l'accès unifié à l'ensemble des services numériques du groupe."
     />
-    <title>BCF Bizness - Abonnement PRO</title>
+    <title>BCF Bizness - Tunnel de Vente</title>
     <style>
       * {
         margin: 0;
@@ -27,7 +27,7 @@
         background: white;
         border-radius: 20px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        max-width: 500px;
+        max-width: 520px;
         width: 100%;
         padding: 40px;
       }
@@ -43,37 +43,116 @@
         margin-bottom: 30px;
         font-size: 0.95em;
       }
-      .pricing {
+
+      /* Étapes du tunnel */
+      .steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        position: relative;
+      }
+      .steps::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #e0e0e0;
+        z-index: 0;
+      }
+      .step {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        flex: 1;
+      }
+      .step-number {
+        width: 40px;
+        height: 40px;
+        background: #e0e0e0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 8px;
+        font-weight: bold;
+        color: #999;
+        transition: all 0.3s;
+      }
+      .step.active .step-number {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 30px;
+      }
+      .step.completed .step-number {
+        background: #4caf50;
+        color: white;
+      }
+      .step-label {
+        font-size: 0.85em;
+        color: #999;
+        font-weight: 500;
+      }
+      .step.active .step-label {
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      /* Étapes du formulaire */
+      .form-step {
+        display: none;
+      }
+      .form-step.active {
+        display: block;
+        animation: fadeIn 0.3s;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+      .plan {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
         border-radius: 15px;
-        margin-bottom: 30px;
         text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
       }
-      .pricing .plan-name {
-        font-size: 1.2em;
-        font-weight: bold;
-        margin-bottom: 15px;
+      .plan .plan-name {
+        font-size: 1.05em;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        margin-bottom: 8px;
       }
-      .pricing .price {
-        font-size: 3em;
-        font-weight: bold;
-        margin-bottom: 5px;
+      .plan .price {
+        font-size: 2.3em;
+        font-weight: 800;
+        margin-bottom: 4px;
       }
-      .pricing .price-detail {
+      .plan .price-detail {
         font-size: 0.9em;
-        opacity: 0.9;
-        margin-bottom: 15px;
+        opacity: 0.92;
+        margin-bottom: 8px;
       }
-      .pricing .setup-fee {
-        font-size: 1.1em;
-        padding: 10px;
+      .plan .setup-fee {
+        font-size: 0.9em;
+        padding: 8px;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 8px;
       }
       .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
       label {
         display: block;
@@ -82,20 +161,52 @@
         margin-bottom: 8px;
         font-size: 0.9em;
       }
-      input {
+      input,
+      select,
+      textarea {
         width: 100%;
         padding: 12px 15px;
         border: 2px solid #e0e0e0;
         border-radius: 8px;
         font-size: 1em;
         transition: border-color 0.3s;
+        font-family: inherit;
       }
-      input:focus {
+      input:focus,
+      select:focus,
+      textarea:focus {
         outline: none;
         border-color: #667eea;
       }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      .checkbox-group {
+        margin-top: 12px;
+      }
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .checkbox-item input[type="checkbox"] {
+        width: auto;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      .checkbox-item label {
+        margin: 0;
+        cursor: pointer;
+        font-weight: 400;
+      }
+      .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+      }
       .btn {
-        width: 100%;
+        flex: 1;
         padding: 15px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -114,6 +225,13 @@
         opacity: 0.6;
         cursor: not-allowed;
       }
+      .btn-secondary {
+        background: #e0e0e0;
+        color: #333;
+      }
+      .btn-secondary:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
       .error {
         background: #fee;
         color: #c33;
@@ -122,18 +240,33 @@
         margin-bottom: 20px;
         display: none;
       }
+      .success {
+        background: #efe;
+        color: #3c3;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+      }
       .features {
-        margin: 20px 0;
-        padding: 20px;
+        margin: 18px 0;
+        padding: 18px;
         background: #f8f9fa;
         border-radius: 10px;
+      }
+      .features h3 {
+        color: #333;
+        margin-bottom: 12px;
+        margin-top: 0;
+        font-size: 1em;
       }
       .features ul {
         list-style: none;
       }
       .features li {
-        padding: 8px 0;
+        padding: 7px 0;
         color: #555;
+        font-size: 0.95em;
       }
       .features li:before {
         content: "✓ ";
@@ -141,79 +274,281 @@
         font-weight: bold;
         margin-right: 8px;
       }
+      .footer {
+        margin-top: 24px;
+        padding-top: 16px;
+        border-top: 1px solid #eee;
+        font-size: 0.95em;
+        color: #555;
+      }
+      .footer-row {
+        margin: 6px 0;
+      }
+      .footer a {
+        color: #667eea;
+        text-decoration: none;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+      .description {
+        color: #666;
+        font-size: 0.95em;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      h2 {
+        color: #667eea;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>BCF Bizness</h1>
-      <p class="subtitle">Plateforme B2B pour externalisation et performance</p>
-      <p
-        style="
-          text-align: center;
-          color: #555;
-          margin-top: 8px;
-          margin-bottom: 22px;
-          font-size: 0.95em;
-        "
-      >
-        BCF Bizness accompagne votre entreprise en externalisation
-        administrative, gestion opérationnelle, conseil et relation client —
-        avec un accès unique via <strong>bcfbiznes.com</strong>.
-      </p>
+      <p class="subtitle">Tunnel de vente — Lead → Conversion</p>
 
-      <div class="pricing">
-        <div class="plan-name">PLAN PRO</div>
-        <div class="price">990 €</div>
-        <div class="price-detail">par mois</div>
-        <div class="setup-fee">+ 490 € de frais d'activation</div>
+      <!-- Indicateur d'étapes -->
+      <div class="steps">
+        <div class="step active" data-step="1">
+          <div class="step-number">1</div>
+          <div class="step-label">Présentation</div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="step-number">2</div>
+          <div class="step-label">Qualification</div>
+        </div>
+        <div class="step" data-step="3">
+          <div class="step-number">3</div>
+          <div class="step-label">Plan & Paiement</div>
+        </div>
       </div>
 
-      <div class="features">
-        <ul>
-          <li>Accès complet à la plateforme</li>
-          <li>Gestion des bons de commande</li>
-          <li>Support prioritaire</li>
-          <li>Accompagnement financement CPF/OPCO</li>
-          <li>Tableau de bord Analytics</li>
-        </ul>
-      </div>
+      <!-- ÉTAPE 1: Landing / Présentation -->
+      <div class="form-step active" id="step-1">
+        <p class="description">
+          BCF Bizness accompagne votre entreprise en
+          <strong>externalisation administrative</strong>,
+          <strong>gestion opérationnelle</strong>, <strong>conseil</strong> et
+          <strong>relation client</strong>.
+        </p>
 
-      <div id="error" class="error"></div>
-
-      <form id="checkout-form">
-        <div class="form-group">
-          <label for="email">Email professionnel</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="votre.email@entreprise.com"
-          />
+        <div class="features">
+          <h3>Pourquoi BCF Bizness ?</h3>
+          <ul>
+            <li>Réduction des coûts opérationnels jusqu'à 40%</li>
+            <li>Accès à des experts dans 15+ domaines</li>
+            <li>Support 24/7 dans votre langue</li>
+            <li>Scalabilité sans limites</li>
+            <li>Intégration avec vos outils existants</li>
+          </ul>
         </div>
 
-        <div class="form-group">
-          <label for="companyName">Nom de l'entreprise</label>
-          <input
-            type="text"
-            id="companyName"
-            name="companyName"
-            required
-            placeholder="Ma Société SARL"
-          />
-        </div>
-
-        <button type="submit" class="btn" id="submit-btn">
-          S'abonner maintenant
-        </button>
-      </form>
-      <footer class="footer">
-        <div class="footer-row">
-          <span>Site officiel : </span>
-          <a href="https://bcfbiznes.com" target="_blank" rel="noopener"
+        <p class="description">
+          Site officiel :
+          <a
+            href="https://bcfbiznes.com"
+            target="_blank"
+            rel="noopener"
+            style="color: #667eea"
             >bcfbiznes.com</a
           >
+        </p>
+
+        <div class="btn-group">
+          <button type="button" class="btn" onclick="goToStep(2)">
+            Continuer →
+          </button>
         </div>
+      </div>
+
+      <!-- ÉTAPE 2: Qualification -->
+      <div class="form-step" id="step-2">
+        <h2>Parlez-nous de votre entreprise</h2>
+
+        <div id="qualification-form">
+          <div class="form-group">
+            <label for="companyName">Nom de l'entreprise *</label>
+            <input
+              type="text"
+              id="companyName"
+              name="companyName"
+              required
+              placeholder="Ma Société SARL"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email professionnel *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="votre.email@entreprise.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="companyType">Type d'entreprise *</label>
+            <select id="companyType" name="companyType" required>
+              <option value="">-- Sélectionnez --</option>
+              <option value="TPE">TPE (1-10 employés)</option>
+              <option value="PME">PME (11-50 employés)</option>
+              <option value="ETI">ETI (51-500 employés)</option>
+              <option value="GRAND">Grand groupe (500+ employés)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="callCenterVolume"
+              >Volume de leads/appels mensuels *</label
+            >
+            <select id="callCenterVolume" name="callCenterVolume" required>
+              <option value="">-- Sélectionnez --</option>
+              <option value="100-500">100 - 500</option>
+              <option value="500-2000">500 - 2 000</option>
+              <option value="2000-5000">2 000 - 5 000</option>
+              <option value="5000+">5 000+</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Accompagnement financement ? *</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="cpf" name="financing" value="CPF" />
+                <label for="cpf">CPF (Compte Personnel de Formation)</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="opco"
+                  name="financing"
+                  value="OPCO"
+                />
+                <label for="opco">OPCO (Opérateurs de Compétences)</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="autre"
+                  name="financing"
+                  value="AUTRE"
+                />
+                <label for="autre">Autre financement</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="needs">Besoins spécifiques</label>
+            <textarea
+              id="needs"
+              name="needs"
+              placeholder="Décrivez vos principaux enjeux et objectifs..."
+            ></textarea>
+          </div>
+
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="goToStep(1)"
+            >
+              ← Retour
+            </button>
+            <button type="button" class="btn" onclick="goToStep(3)">
+              Continuer →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 3: Plans & Paiement -->
+      <div class="form-step" id="step-3">
+        <h2>Choisissez votre plan</h2>
+
+        <div class="pricing-grid">
+          <div class="plan">
+            <div class="plan-name">PLAN STARTER</div>
+            <div class="price">249 €</div>
+            <div class="price-detail">par mois</div>
+            <div class="setup-fee">Activation incluse</div>
+          </div>
+          <div class="plan">
+            <div class="plan-name">PLAN PRO</div>
+            <div class="price">499 €</div>
+            <div class="price-detail">par mois</div>
+            <div class="setup-fee">Activation incluse</div>
+          </div>
+          <div class="plan">
+            <div class="plan-name">PLAN PREMIUM</div>
+            <div class="price">
+              <span class="launch-price">399 €</span><br /><span
+                class="normal-price"
+                style="font-size: 0.6em; opacity: 0.8"
+              >
+                (normalement 999 €)
+              </span>
+            </div>
+            <div class="price-detail">Prix de lancement</div>
+            <div class="setup-fee">Activation incluse</div>
+          </div>
+        </div>
+
+        <div id="error" class="error"></div>
+        <div id="success" class="success"></div>
+
+        <form id="checkout-form">
+          <div class="form-group">
+            <label for="plan">Sélectionnez votre plan *</label>
+            <select id="plan" name="plan" required>
+              <option value="">-- Choisissez un plan --</option>
+              <option value="STARTER">Starter - 249 € / mois</option>
+              <option value="PRO" selected>Pro - 499 € / mois</option>
+              <option value="PREMIUM">
+                Premium - 399 € / mois (prix de lancement)
+              </option>
+            </select>
+          </div>
+
+          <div class="features">
+            <h3>✓ Inclus dans tous les plans</h3>
+            <ul>
+              <li>Accès complet à la plateforme</li>
+              <li>Gestion des bons de commande</li>
+              <li>Support prioritaire</li>
+              <li>Accompagnement financement CPF/OPCO</li>
+              <li>
+                Tableau de bord Analytics par Call center entrants + sortants
+              </li>
+              <li>Recherche de financements complète + suivi</li>
+              <li>Nom de domaine + mails illimités</li>
+              <li>CRM / base de données avancée</li>
+              <li>Tunnel de vente complet (lead → conversion)</li>
+              <li>Tableaux de bord + accompagnement stratégique</li>
+            </ul>
+          </div>
+
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="goToStep(2)"
+            >
+              ← Retour
+            </button>
+            <button type="submit" class="btn" id="submit-btn">
+              S'abonner maintenant
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
         <div class="footer-row">
           <span>Contact : </span>
           <a href="mailto:contact@bcfbiznes.com">contact@bcfbiznes.com</a>
@@ -226,67 +561,102 @@
     </div>
 
     <script>
-          const FUNCTION_URL =
-            "https://bcf-stripe-prod.azurewebsites.net/api/stripe/createcheckoutsession";
-        .footer {
-          margin-top: 28px;
-          padding-top: 18px;
-          border-top: 1px solid #eee;
-          font-size: 0.95em;
-          color: #555;
-        }
-        .footer-row { margin: 6px 0; }
-        .footer a { color: #667eea; text-decoration: none; }
-        .footer a:hover { text-decoration: underline; }
-      </style>
-          // IMPORTANT: Remplacez par votre clé Azure Function
-          // Récupérez-la avec: az functionapp keys list --name bcf-stripe-prod --resource-group rg-bcf-prod --query "functionKeys.default" -o tsv
-          const FUNCTION_KEY = "REMPLACER_PAR_VOTRE_CLE_AZURE";
+      const FUNCTION_URL =
+        "https://bcf-stripe-prod.azurewebsites.net/api/stripe/createcheckoutsession";
+      const FUNCTION_KEY = "REMPLACER_PAR_VOTRE_CLE_AZURE";
 
-          document
-            .getElementById("checkout-form")
-            .addEventListener("submit", async (e) => {
-              e.preventDefault();
+      // Navigation entre étapes
+      function goToStep(stepNumber) {
+        // Masquer toutes les étapes
+        document.querySelectorAll(".form-step").forEach((step) => {
+          step.classList.remove("active");
+        });
 
-              const btn = document.getElementById("submit-btn");
-              const errorDiv = document.getElementById("error");
-              errorDiv.style.display = "none";
+        // Afficher l'étape demandée
+        document.getElementById("step-" + stepNumber).classList.add("active");
 
-              btn.disabled = true;
-              btn.textContent = "Redirection vers le paiement...";
+        // Mettre à jour l'indicateur d'étapes
+        document.querySelectorAll(".step").forEach((step) => {
+          step.classList.remove("active", "completed");
+          if (parseInt(step.dataset.step) < stepNumber) {
+            step.classList.add("completed");
+          } else if (parseInt(step.dataset.step) === stepNumber) {
+            step.classList.add("active");
+          }
+        });
 
-              try {
-                const response = await fetch(FUNCTION_URL, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "x-functions-key": FUNCTION_KEY,
-                  },
-                  body: JSON.stringify({
-                    email: document.getElementById("email").value,
-                    companyName: document.getElementById("companyName").value,
-                    dvSubscriptionId: "web-" + Date.now(),
-                  }),
-                });
+        // Scroller vers le haut
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
 
-                if (!response.ok) {
-                  throw new Error("Erreur de configuration du paiement");
-                }
+      // Gestion du formulaire de paiement
+      document
+        .getElementById("checkout-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-                const data = await response.json();
+          const btn = document.getElementById("submit-btn");
+          const errorDiv = document.getElementById("error");
+          const successDiv = document.getElementById("success");
+          errorDiv.style.display = "none";
+          successDiv.style.display = "none";
 
-                if (data.url) {
-                  window.location.href = data.url;
-                } else {
-                  throw new Error("URL de paiement non reçue");
-                }
-              } catch (error) {
-                errorDiv.textContent = error.message;
-                errorDiv.style.display = "block";
-                btn.disabled = false;
-                btn.textContent = "S'abonner maintenant";
+          btn.disabled = true;
+          btn.textContent = "Redirection vers le paiement...";
+
+          try {
+            // Récupérer les données de qualification
+            const qualificationData = {
+              companyName: document.getElementById("companyName").value,
+              email: document.getElementById("email").value,
+              companyType: document.getElementById("companyType").value,
+              callCenterVolume:
+                document.getElementById("callCenterVolume").value,
+              financing: Array.from(
+                document.querySelectorAll('input[name="financing"]:checked')
+              ).map((cb) => cb.value),
+              needs: document.getElementById("needs").value,
+            };
+
+            const response = await fetch(
+              `${FUNCTION_URL}?code=${FUNCTION_KEY}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: qualificationData.email,
+                  companyName: qualificationData.companyName,
+                  companyType: qualificationData.companyType,
+                  callCenterVolume: qualificationData.callCenterVolume,
+                  financing: qualificationData.financing.join(","),
+                  needs: qualificationData.needs,
+                  dvSubscriptionId: "web-" + Date.now(),
+                  plan: document.getElementById("plan").value,
+                }),
               }
-            });
+            );
+
+            if (!response.ok) {
+              throw new Error("Erreur de configuration du paiement");
+            }
+
+            const data = await response.json();
+
+            if (data.url) {
+              window.location.href = data.url;
+            } else {
+              throw new Error("URL de paiement non reçue");
+            }
+          } catch (error) {
+            errorDiv.textContent =
+              error instanceof Error ? error.message : "Erreur inconnue";
+            errorDiv.style.display = "block";
+            btn.disabled = false;
+            btn.textContent = "S'abonner maintenant";
+          }
+        });
     </script>
   </body>
 </html>

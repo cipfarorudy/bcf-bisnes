@@ -1,0 +1,4 @@
+Type: CNAME
+Nom: www
+Cible: ambitious-forest-04f3b3503.3.azurestaticapps.net
+TTL: 300 secondes (ou minimum autorisé)
