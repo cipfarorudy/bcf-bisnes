@@ -561,7 +561,11 @@
     </div>
 
     <script>
-      const FUNCTION_BASE_URL = "https://bcf-stripe-prod.azurewebsites.net/api";
+      // Bascule auto: prod = domaine azurewebsites ; sinon suppose local
+      const isProd = /azurewebsites\.net$/i.test(location.hostname);
+      const FUNCTION_BASE_URL = isProd
+        ? "https://bcf-stripe-prod.azurewebsites.net/api"
+        : "http://localhost:7071/api";
       const FUNCTION_URL = FUNCTION_BASE_URL + "/stripe/createcheckoutsession";
 
       let FUNCTION_KEY = "";
@@ -622,8 +626,9 @@
           btn.textContent = "Redirection vers le paiement...";
 
           try {
-            if (!FUNCTION_KEY) {
-              throw new Error("Clé API non configurée");
+            // En prod: exiger la clé ; en local: tolérer l'absence
+            if (!FUNCTION_KEY && isProd) {
+              throw new Error("Clé API non configurée (prod)");
             }
 
             // Récupérer les données de qualification
@@ -639,25 +644,27 @@
               needs: document.getElementById("needs").value,
             };
 
-            const response = await fetch(
-              `${FUNCTION_URL}?code=${FUNCTION_KEY}`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  email: qualificationData.email,
-                  companyName: qualificationData.companyName,
-                  companyType: qualificationData.companyType,
-                  callCenterVolume: qualificationData.callCenterVolume,
-                  financing: qualificationData.financing.join(","),
-                  needs: qualificationData.needs,
-                  dvSubscriptionId: "web-" + Date.now(),
-                  plan: document.getElementById("plan").value,
-                }),
-              }
-            );
+            const requestUrl =
+              FUNCTION_KEY && isProd
+                ? `${FUNCTION_URL}?code=${FUNCTION_KEY}`
+                : FUNCTION_URL;
+
+            const response = await fetch(requestUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: qualificationData.email,
+                companyName: qualificationData.companyName,
+                companyType: qualificationData.companyType,
+                callCenterVolume: qualificationData.callCenterVolume,
+                financing: qualificationData.financing.join(","),
+                needs: qualificationData.needs,
+                dvSubscriptionId: "web-" + Date.now(),
+                plan: document.getElementById("plan").value,
+              }),
+            });
 
             if (!response.ok) {
               throw new Error("Erreur de configuration du paiement");

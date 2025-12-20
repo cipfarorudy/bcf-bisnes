@@ -12,7 +12,7 @@ import {
 app.http("getApiKey", {
   route: "config/apikey",
   methods: ["GET"],
-  authLevel: "function",
+  authLevel: "anonymous",
   handler: async (
     req: HttpRequest,
     ctx: InvocationContext
@@ -26,9 +26,29 @@ app.http("getApiKey", {
         return { status: 500, body: "Configuration error" };
       }
 
+      // Contrôle d'origine simple (prod et local)
+      const origin =
+        req.headers.get("origin") || req.headers.get("referer") || "";
+      const allowed = (
+        process.env.ALLOWED_ORIGINS ||
+        "https://bcf-stripe-prod.azurewebsites.net,http://localhost:7071,http://localhost:5500,http://127.0.0.1:5500"
+      )
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      const isAllowed = !origin || allowed.some((o) => origin.startsWith(o));
+      if (!isAllowed) {
+        ctx.warn(`Blocked getApiKey from origin: ${origin}`);
+        return { status: 403, body: "Forbidden" };
+      }
+
       return {
         status: 200,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
         body: JSON.stringify({ apiKey }),
       };
     } catch (error: any) {

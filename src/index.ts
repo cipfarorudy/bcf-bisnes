@@ -2,3 +2,4 @@
 import "./functions/stripeWebhook";
 import "./functions/createCheckoutSession";
 import "./functions/customerPortal";
+import "./functions/getApiKey";
