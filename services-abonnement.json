@@ -1,0 +1,73 @@
+{
+  "subscriptionServices": [
+    {
+      "id": 1,
+      "name": "Call Center",
+      "nameLocal": "Centre d'Appels",
+      "description": "Service de centre d'appels professionnel pour gérer vos communications clients",
+      "features": [
+        "Support téléphonique professionnel",
+        "Gestion des appels entrants et sortants",
+        "Enregistrement et suivi des appels",
+        "Disponibilité étendue",
+        "Rapports d'activité détaillés"
+      ],
+      "pricing": {
+        "currency": "EUR",
+        "monthly": 299.99,
+        "quarterly": 799.99,
+        "yearly": 2999.99
+      },
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "Funding Research",
+      "nameLocal": "Recherche de Financement",
+      "description": "Service de recherche et d'identification de sources de financement pour votre entreprise",
+      "features": [
+        "Analyse des besoins de financement",
+        "Recherche de sources de financement adaptées",
+        "Aide à la préparation de dossiers",
+        "Accompagnement dans les démarches",
+        "Suivi des opportunités de financement"
+      ],
+      "pricing": {
+        "currency": "EUR",
+        "monthly": 499.99,
+        "quarterly": 1299.99,
+        "yearly": 4999.99
+      },
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "name": "Domain + Database + Professional Email + Sales Funnel",
+      "nameLocal": "Nom de Domaine + Base de Données + Email Pro + Tunnel de Vente",
+      "description": "Solution complète pour votre présence en ligne avec infrastructure technique et outils de vente",
+      "features": [
+        "Nom de domaine personnalisé",
+        "Base de données sécurisée et performante",
+        "Adresses email professionnelles",
+        "Tunnel de vente optimisé",
+        "Support technique dédié",
+        "Hébergement inclus",
+        "Certificat SSL",
+        "Sauvegardes automatiques"
+      ],
+      "pricing": {
+        "currency": "EUR",
+        "monthly": 199.99,
+        "quarterly": 499.99,
+        "yearly": 1899.99
+      },
+      "status": "active"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-12-17",
+    "currency": "EUR",
+    "paymentTerms": "Paiement mensuel, trimestriel ou annuel"
+  }
+}
